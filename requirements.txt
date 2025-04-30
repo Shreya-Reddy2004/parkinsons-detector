@@ -5,3 +5,5 @@ opencv-contrib-python==4.5.5.64
 PyQt5==5.15.9
 scikit-image>=0.19.0
 scikit-learn>=1.0.2
+streamlit
+streamlit-drawable-canvas
