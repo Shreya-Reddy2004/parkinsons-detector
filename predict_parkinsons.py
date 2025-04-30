@@ -2,7 +2,7 @@ from sklearn.ensemble import RandomForestClassifier
 from skimage import feature
 import numpy as np
 import joblib
-import cv2
+
 import os
 
 
