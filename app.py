@@ -3,6 +3,7 @@ from streamlit_drawable_canvas import st_canvas
 from PIL import Image
 import numpy as np
 import os
+import uuid
 from predict_parkinsons import predict_image
 
 # Paths to the models
@@ -17,6 +18,20 @@ input_mode = st.sidebar.radio("Select input type", ["Draw on Canvas", "Upload Im
 st.sidebar.title("Brush Settings")
 stroke_width = st.sidebar.slider("Stroke width: ", 1, 25, 12)
 stroke_color = st.sidebar.color_picker("Stroke color", "#000000")
+
+def save_temp_image(img: Image.Image) -> str:
+    filename = f"{uuid.uuid4().hex}.png"
+    filepath = os.path.join("temp_images", filename)
+    os.makedirs("temp_images", exist_ok=True)
+    img.save(filepath)
+    return filepath
+
+def run_detection(image_path: str, model_path: str):
+    try:
+        pred = predict_image(image_path, model_path)
+        st.markdown(f"### Result: {'🟢 Healthy' if pred == 'Healthy' else '🔴 Parkinson’s'}")
+    except Exception as e:
+        st.error(f"Prediction failed: {e}")
 
 # Canvas Drawing Section
 if input_mode == "Draw on Canvas":
@@ -34,27 +49,23 @@ if input_mode == "Draw on Canvas":
     )
 
     if canvas_result.image_data is not None:
-        # Convert RGBA to RGB with white background
         img_rgba = canvas_result.image_data
         alpha = img_rgba[:, :, 3] > 0  # Alpha channel mask
         rgb_array = (img_rgba[:, :, :3] * 255).astype(np.uint8)
         white_bg = np.ones_like(rgb_array, dtype=np.uint8) * 255
         white_bg[alpha] = rgb_array[alpha]
 
-        # Convert to grayscale and resize to match model
         img = Image.fromarray(white_bg).convert("L").resize((128, 128))
-        img.save("temp_canvas.png")
+        saved_path = save_temp_image(img)
 
         col1, col2 = st.columns(2)
         with col1:
             if st.button("🌀 Detect Spiral"):
-                pred = predict_image("temp_canvas.png", SPIRAL_MODEL)
-                st.markdown(f"### Result: {'🟢 Healthy' if pred == 'Healthy' else '🔴 Parkinson’s'}")
+                run_detection(saved_path, SPIRAL_MODEL)
 
         with col2:
             if st.button("🌊 Detect Wave"):
-                pred = predict_image("temp_canvas.png", WAVE_MODEL)
-                st.markdown(f"### Result: {'🟢 Healthy' if pred == 'Healthy' else '🔴 Parkinson’s'}")
+                run_detection(saved_path, WAVE_MODEL)
 
 # Upload Image Section
 elif input_mode == "Upload Image":
@@ -63,17 +74,15 @@ elif input_mode == "Upload Image":
     uploaded_file = st.file_uploader("Choose an image file", type=["png", "jpg", "jpeg"])
 
     if uploaded_file is not None:
-        img = Image.open(uploaded_file).convert("L").resize((128, 128))  # Match model expectations
+        img = Image.open(uploaded_file).convert("L").resize((128, 128))
         st.image(img, caption="Uploaded Image", use_column_width=True)
-        img.save("temp_uploaded.png")
+        saved_path = save_temp_image(img)
 
         col1, col2 = st.columns(2)
         with col1:
             if st.button("🌀 Detect Spiral"):
-                pred = predict_image("temp_uploaded.png", SPIRAL_MODEL)
-                st.markdown(f"### Result: {'🟢 Healthy' if pred == 'Healthy' else '🔴 Parkinson’s'}")
+                run_detection(saved_path, SPIRAL_MODEL)
 
         with col2:
             if st.button("🌊 Detect Wave"):
-                pred = predict_image("temp_uploaded.png", WAVE_MODEL)
-                st.markdown(f"### Result: {'🟢 Healthy' if pred == 'Healthy' else '🔴 Parkinson’s'}")
+                run_detection(saved_path, WAVE_MODEL)
