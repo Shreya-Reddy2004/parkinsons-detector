@@ -1,101 +1,133 @@
 
-# Parkinson’s Detector
+# 🧠 Parkinson’s Detector
 
-**A Streamlit-based web app to predict Parkinson’s disease from spiral or wave drawings using ML models**
+**Draw or upload spiral/wave images to detect potential Parkinson’s disease — powered by Machine Learning and Streamlit!**
 
-## Overview
+---
 
-This project provides an interactive web application that helps detect potential signs of Parkinson’s disease by analyzing spiral or wave patterns. Users can either **draw directly on an in-browser canvas** or **upload an image** of a spiral/wave. The app uses pre-trained Random Forest models to classify results as **Healthy** or **Parkinson’s**.
+## 📌 Overview
 
-## Project Structure
+The **Parkinson’s Detector** is a web-based application built with **Streamlit** that allows users to either **draw** or **upload** images of **spirals** or **waves**.
+It uses **Random Forest Classifier models** trained on medical datasets to predict whether the input indicates **Healthy** or **Parkinson’s** patterns.
 
-```
-├── models/                  # Pre-trained model files (Random Forest for spiral & wave)  
-├── app.py                   # Main Streamlit application script  
-├── predict_parkinsons.py    # Functions to preprocess and predict using the models  
-├── requirements.txt         # Python dependencies  
-└── README.md                # Project documentation  
-```
+This tool aims to provide a **quick, non-invasive pre-screening method** for research and educational purposes — **not as a substitute for professional medical diagnosis**.
 
-## Installation & Setup
+---
 
-1. **Clone the repository**
+## 📂 Project Structure
 
 ```
-git clone https://github.com/Shreya-Reddy2004/parkinsons-detector.git  
-cd parkinsons-detector  
+├── app.py                          # Main Streamlit application
+├── predict_parkinsons.py            # Image preprocessing & prediction logic
+├── models/
+│   ├── random_forest_spiral_model.pkl
+│   └── random_forest_wave_model.pkl
+├── requirements.txt                 # Python dependencies
+└── README.md                        # Project documentation
 ```
 
-2. **Create and activate a virtual environment (optional)**
+---
+
+## ✨ Features
+
+* ✏ **Draw on Canvas**: Create spiral or wave drawings directly in the browser.
+* 📤 **Upload Image**: Upload existing spiral/wave images for analysis.
+* 🔍 **Two Prediction Modes**:
+
+  * 🌀 Spiral detection
+  * 🌊 Wave detection
+* 🖼 **Live Preview** of your drawing or uploaded image.
+* ⚡ **Fast Prediction** using pre-trained Random Forest models.
+
+---
+
+## ⚙️ Installation & Setup
+
+### 1️⃣ Clone the repository
+
+```bash
+git clone https://github.com/Shreya-Reddy2004/parkinsons-detector.git
+cd parkinsons-detector
+```
+
+### 2️⃣ Create and activate a virtual environment (optional but recommended)
+
+```bash
+python -m venv venv
+source venv/bin/activate       # Linux / macOS
+venv\Scripts\activate          # Windows
+```
+
+### 3️⃣ Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+## ▶️ Running the Application
+
+Run the Streamlit app:
+
+```bash
+streamlit run app.py
+```
+
+The application will open in your browser at:
 
 ```
-python -m venv venv  
-source venv/bin/activate      # Linux / macOS  
-venv\Scripts\activate         # Windows  
+http://localhost:8501
 ```
 
-3. **Install dependencies**
+---
 
-```
-pip install -r requirements.txt  
-```
+## 🎯 How to Use
 
-## Running the Application
+### **1. Draw on Canvas**
 
-Run the following command:
+* Select **"Draw on Canvas"** from the sidebar.
+* Adjust brush **stroke width** and **color**.
+* Draw either a **spiral** or **wave**.
+* Click **"🌀 Detect Spiral"** or **"🌊 Detect Wave"** to get the prediction.
 
-```
-streamlit run app.py  
-```
+### **2. Upload Image**
 
-Streamlit will open a browser window (usually at `http://localhost:8501`) with the app.
+* Select **"Upload Image"** from the sidebar.
+* Choose a PNG/JPG/JPEG file.
+* Click **"🌀 Detect Spiral"** or **"🌊 Detect Wave"** to get the prediction.
 
-## How It Works
+---
 
-* **Draw on Canvas**:
+## 🧠 Model Details
 
-  * Choose brush size and color from the sidebar.
-  * Draw a spiral or wave on the provided canvas.
-  * Click “🌀 Detect Spiral” or “🌊 Detect Wave” to run predictions.
+* **Algorithm**: Random Forest Classifier
+* **Input**: Grayscale spiral or wave image
+* **Preprocessing**:
 
-* **Upload Image**:
+  * Convert to grayscale
+  * Resize and threshold image
+* **Output**:
 
-  * Upload a PNG/JPG/JPEG image of a spiral or wave.
-  * Click the respective detection button.
+  * 🟢 Healthy
+  * 🔴 Parkinson’s
 
-The app then:
+---
 
-1. Converts the image to grayscale.
-2. Processes it for feature extraction.
-3. Loads the respective trained model from `models/`.
-4. Displays the prediction result: **🟢 Healthy** or **🔴 Parkinson’s**.
+## 📦 Dependencies
 
-## Dependencies
+* `streamlit`
+* `streamlit-drawable-canvas`
+* `Pillow`
+* `numpy`
+* `opencv-python`
+* `scikit-learn`
 
-* streamlit
-* streamlit-drawable-canvas
-* Pillow
-* numpy
-* opencv-python
-* scikit-learn
+> 📜 Full list with versions is available in `requirements.txt`.
 
-(Exact versions are listed in `requirements.txt`)
+---
 
-## Deployment
+## ⚠️ Disclaimer
 
-You can deploy the app to **Streamlit Cloud** or other platforms:
-
-* For Streamlit Cloud: Push to GitHub, sign in to Streamlit Cloud, and select the repo.
-* Ensure `requirements.txt` contains all dependencies.
-
-## Customization Ideas
-
-* Improve the models with more training data.
-* Add probability scores alongside predictions.
-* Include SHAP or Grad-CAM visual explanations.
-* Enhance UI with more theme options.
-
-## Contact
-
-Created by **Shreya Reddy** — open for collaboration and feedback.
-
+This project is **for research and educational purposes only**.
+It is **not a diagnostic tool** and should not be used as a substitute for professional medical advice or examination.
