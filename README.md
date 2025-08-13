@@ -95,10 +95,6 @@ You can deploy the app to **Streamlit Cloud** or other platforms:
 * Include SHAP or Grad-CAM visual explanations.
 * Enhance UI with more theme options.
 
-## License
-
-Specify a license here (e.g., MIT License).
-
 ## Contact
 
 Created by **Shreya Reddy** — open for collaboration and feedback.
