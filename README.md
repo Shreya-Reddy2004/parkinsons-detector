@@ -1,101 +1,112 @@
+Got it — your project is **Streamlit-based**, not Flask.
+Here’s the corrected **README.md** in a single copy-paste-ready block:
+
+---
+
 # Parkinson’s Detector
 
-**A Flask-based web app to predict Parkinson’s disease using ML models**
+**A Streamlit-based web app to predict Parkinson’s disease from spiral or wave drawings using ML models**
 
 ## Overview
 
-This project provides a lightweight web application for detecting Parkinson’s disease using a trained machine learning model. Users can input relevant data via a web interface, and the app returns predictions using pre-trained models stored in the `models/` directory.
+This project provides an interactive web application that helps detect potential signs of Parkinson’s disease by analyzing spiral or wave patterns. Users can either **draw directly on an in-browser canvas** or **upload an image** of a spiral/wave. The app uses pre-trained Random Forest models to classify results as **Healthy** or **Parkinson’s**.
 
 ## Project Structure
 
 ```
-├── .devcontainer/           # Configuration files for development containers (e.g., VS Code Remote Containers)  
-├── models/                  # Pre-trained model files (pickle, HDF5, joblib, etc.)  
-├── app.py                   # Main Flask application script  
-├── predict_parkinsons.py    # Python module for data preprocessing and model predictions  
-├── requirements.txt         # List of required Python dependencies  
-├── runtime.txt              # Runtime specification (e.g., for deployment platforms like Heroku)  
+├── models/                  # Pre-trained model files (Random Forest for spiral & wave)  
+├── app.py                   # Main Streamlit application script  
+├── predict_parkinsons.py    # Functions to preprocess and predict using the models  
+├── requirements.txt         # Python dependencies  
 └── README.md                # Project documentation  
 ```
 
 ## Installation & Setup
 
-1. Clone the repository
+1. **Clone the repository**
 
 ```
 git clone https://github.com/Shreya-Reddy2004/parkinsons-detector.git  
 cd parkinsons-detector  
 ```
 
-2. Create and activate a virtual environment (optional but recommended)
+2. **Create and activate a virtual environment (optional)**
 
 ```
-python3 -m venv venv  
-source venv/bin/activate         # Linux / macOS  
-venv\Scripts\activate            # Windows  
+python -m venv venv  
+source venv/bin/activate      # Linux / macOS  
+venv\Scripts\activate         # Windows  
 ```
 
-3. Install dependencies
+3. **Install dependencies**
 
 ```
 pip install -r requirements.txt  
 ```
 
-4. Ensure that your models are correctly placed in the `models/` directory (e.g., `model.pkl` or `model.joblib`).
-
 ## Running the Application
 
-```
-python app.py  
-```
-
-Once running, open a web browser and navigate to `http://127.0.0.1:5000` to access the prediction form.
-
-## Project Components
-
-* **app.py** – Initializes Flask, defines routes, renders HTML templates, and handles form submissions.
-* **predict\_parkinsons.py** – Loads the trained model, processes input features, and generates predictions.
-* **models/** – Contains the trained model file(s).
-
-## Usage Example
-
-1. Start the server:
+Run the following command:
 
 ```
-python app.py  
+streamlit run app.py  
 ```
 
-2. Open `http://127.0.0.1:5000` in your browser.
-3. Fill out the form with patient feature data.
-4. Submit to receive a prediction: “Parkinson’s detected” or “No Parkinson’s”.
+Streamlit will open a browser window (usually at `http://localhost:8501`) with the app.
+
+## How It Works
+
+* **Draw on Canvas**:
+
+  * Choose brush size and color from the sidebar.
+  * Draw a spiral or wave on the provided canvas.
+  * Click “🌀 Detect Spiral” or “🌊 Detect Wave” to run predictions.
+
+* **Upload Image**:
+
+  * Upload a PNG/JPG/JPEG image of a spiral or wave.
+  * Click the respective detection button.
+
+The app then:
+
+1. Converts the image to grayscale.
+2. Processes it for feature extraction.
+3. Loads the respective trained model from `models/`.
+4. Displays the prediction result: **🟢 Healthy** or **🔴 Parkinson’s**.
 
 ## Dependencies
 
-* Flask
+* streamlit
+* streamlit-drawable-canvas
+* Pillow
+* numpy
+* opencv-python
 * scikit-learn
-* pandas, numpy
-* Optional: gunicorn or waitress for deployment
 
-## Deployment Guidance
+(Exact versions are listed in `requirements.txt`)
 
-You can deploy this app to Heroku, Railway, or Render:
+## Deployment
 
-* Include a `Procfile` if required.
-* Ensure `requirements.txt` is updated.
-* Set the correct Python version in `runtime.txt`.
+You can deploy the app to **Streamlit Cloud** or other platforms:
+
+* For Streamlit Cloud: Push to GitHub, sign in to Streamlit Cloud, and select the repo.
+* Ensure `requirements.txt` contains all dependencies.
 
 ## Customization Ideas
 
-* Improve the ML model with more data or algorithms.
-* Add visualizations or SHAP explainability.
-* Enhance UI using Bootstrap or similar frameworks.
-* Create a REST API for predictions.
-* Add automated testing.
+* Improve the models with more training data.
+* Add probability scores alongside predictions.
+* Include SHAP or Grad-CAM visual explanations.
+* Enhance UI with more theme options.
 
 ## License
 
-Specify your license here (MIT recommended for open use).
+Specify a license here (e.g., MIT License).
 
 ## Contact
 
-Created by **Shreya Reddy** – Open for collaboration, questions, and feedback.
+Created by **Shreya Reddy** — open for collaboration and feedback.
+
+---
+
+Do you want me to also make a **shorter one-paragraph version** for GitHub so it looks clean but still links to detailed docs? That would make your repo front page look sharper.
