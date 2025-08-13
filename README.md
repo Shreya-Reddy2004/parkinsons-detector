@@ -1,7 +1,3 @@
-Got it — your project is **Streamlit-based**, not Flask.
-Here’s the corrected **README.md** in a single copy-paste-ready block:
-
----
 
 # Parkinson’s Detector
 
@@ -107,6 +103,3 @@ Specify a license here (e.g., MIT License).
 
 Created by **Shreya Reddy** — open for collaboration and feedback.
 
----
-
-Do you want me to also make a **shorter one-paragraph version** for GitHub so it looks clean but still links to detailed docs? That would make your repo front page look sharper.
